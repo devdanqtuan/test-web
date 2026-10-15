@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Scribblit - Main Application Script
+ * Arcix - Main Application Script
  * ==========================================================================
  * Quản lý tương tác giao diện:
  * 1. Style Presets (Thay đổi font & kiểu chữ trực tiếp trên Hero)
@@ -176,6 +176,10 @@ function initToolbarActions() {
         // Chuyển đổi Dark / Light Theme
         state.dark = !state.dark;
         document.documentElement.classList.toggle('light', !state.dark);
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+          favicon.href = state.dark ? 'logo/Logo_Light.png' : 'logo/Logo_Dark.png';
+        }
       } else if (state[formatKey] !== undefined) {
         // Chuyển đổi trạng thái định dạng (bold, italic, strike, underline, list, align)
         state[formatKey] = !state[formatKey];
@@ -225,214 +229,276 @@ function initScrollReveal() {
 function initSmoothScroll() {
   DOM.anchorLinks.forEach((link) => {
     link.addEventListener('click', (event) => {
-      const targetId = link.getAttribute('href');
-      if (targetId === '#' || !targetId.startsWith('#')) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#' || !href.startsWith('#')) return;
 
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        event.preventDefault();
-        targetElement.scrollIntoView({ behavior: 'smooth' });
+      const targetId = href.split('?')[0];
+      try {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          event.preventDefault();
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (err) {
+        // Fallback gracefully
       }
     });
   });
 }
 
 // ==========================================================================
-// 8. ARCHITECTURAL BLUEPRINT CALLOUTS & SCROLL ANIMATION
+// 8. HỆ THỐNG QUẢN LÝ BẢNG GIÁ & CHUYỂN ĐỔI CHU KỲ (PRICING SYSTEM)
 // ==========================================================================
 
+const PRICING_DATA = {
+  // 1 THÁNG
+  '1': {
+    periodText: '/month',
+    standard: { price: '$8.99', original: '$12.99' },
+    pro: { price: '$17.99', original: '$24.99' },       // Chốt $17.99
+    team: {
+      '3': { price: '$44.99', original: '$59.99' },     // ~$15.00/người/tháng (Rẻ hơn 3 x $17.99 = $53.97)
+      '5': { price: '$69.99', original: '$99.99' },     // ~$14.00/người/tháng
+      '10': { price: '$119.99', original: '$179.99' },  // ~$12.00/người/tháng
+      'more': { price: 'Custom', original: '' }
+    }
+  },
+
+  // 12 THÁNG (BEST VALUE)
+  '12': {
+    periodText: '/year',
+    standard: { price: '$59.99', original: '$89.99' },  // Giữ làm decoy nếu muốn
+    pro: {
+      price: '$119.99',
+      original: '$199.99',                             // Neo giá gốc $199.99 để tạo độ hời
+    },
+    team: {
+      '3': { price: '$289.99', original: '$399' },     // ~$96.66/người/năm (Rẻ hơn 3 x $119.99 = $359.97)
+      '5': { price: '$429.99', original: '$599' },     // ~$86.00/người/năm
+      '10': { price: '$749.99', original: '$1,099' },  // ~$75.00/người/năm
+      'more': { price: 'Custom', original: '' }
+    }
+  }
+};
+
+let currentBillingPeriod = '12';
+let currentTeamDevices = '3';
+
 /**
- * Hiệu ứng cuộn chuột kiến trúc:
- * - Ảnh hero gốc (hero-mono) giữ nguyên kích thước toàn cảnh (không thu nhỏ)
- * - Khi cuộn xuống, chữ hero ở giữa mờ dần và biến mất
- * - Xuất hiện các chấm tròn (hotspots) tại các vị trí kết cấu trên ảnh gốc
- * - Nối các chấm tròn tới 5 bản vẽ kiến trúc chi tiết bằng các đường nét đứt (dashed lines)
- * - 5 góc nhìn:
- *   1. arc3-top: Mặt bằng mái (Top Plan)
- *   2. arc5-scection-left: Mặt cắt bên trái (Section Left)
- *   3. arc2-back: Mặt sau (Back Elevation)
- *   4. arc8-view-finish-to-ceiling: Góc nhìn từ sàn lên trần (Finish to Ceiling)
- *   5. arc1-front: Mặt đứng chính diện (Front Elevation)
+ * Cập nhật đồng bộ tất cả giá tiền, giá gạch đỏ và link của cả 3 gói
  */
-function initHeroScrollAnimation() {
-  const hero = document.querySelector('.hero');
-  const stage = document.getElementById('hero-stage');
-  const heroContent = document.getElementById('hero-content');
-  const heroOverlay = document.getElementById('hero-overlay');
+function updateAllPricing() {
+  const periodData = PRICING_DATA[currentBillingPeriod];
+  if (!periodData) return;
 
-  if (!hero || !stage || !heroContent || !heroOverlay) return;
+  const periodText = periodData.periodText;
 
-  const cards = document.querySelectorAll('.callout-card');
+  // 1. CẬP NHẬT GÓI STANDARD
+  const stdPrice = document.getElementById('standard-price-val');
+  const stdOrig = document.getElementById('standard-original-val');
+  const stdPeriod = document.getElementById('standard-period-val');
+  const stdBtn = document.getElementById('standard-action-btn');
 
-  let currentProgress = 0;
-  let targetProgress = 0;
-  let isRunning = false;
+  if (stdPrice) {
+    stdPrice.classList.remove('price-pop');
+    void stdPrice.offsetWidth;
+    stdPrice.textContent = periodData.standard.price;
+    stdPrice.classList.add('price-pop');
+  }
+  if (stdOrig) stdOrig.textContent = periodData.standard.original;
+  if (stdPeriod) stdPeriod.textContent = periodText;
+  if (stdBtn) stdBtn.setAttribute('href', `#cta?plan=standard&period=${currentBillingPeriod}`);
 
-  function calculateTargetProgress() {
-    const rect = hero.getBoundingClientRect();
-    const scrollDistance = window.innerHeight * 1.8;
-    if (scrollDistance <= 0) return 0;
-    return Math.max(0, Math.min(1, -rect.top / scrollDistance));
+  // 2. CẬP NHẬT GÓI PRO
+  const proPrice = document.getElementById('pro-price-val');
+  const proOrig = document.getElementById('pro-original-val');
+  const proPeriod = document.getElementById('pro-period-val');
+  const proBtn = document.getElementById('pro-action-btn');
+
+  if (proPrice) {
+    proPrice.classList.remove('price-pop');
+    void proPrice.offsetWidth;
+    proPrice.textContent = periodData.pro.price;
+    proPrice.classList.add('price-pop');
+  }
+  if (proOrig) proOrig.textContent = periodData.pro.original;
+  if (proPeriod) proPeriod.textContent = periodText;
+  if (proBtn) proBtn.setAttribute('href', `#cta?plan=pro&period=${currentBillingPeriod}`);
+
+  // 3. CẬP NHẬT GÓI TEAM
+  const teamPrice = document.getElementById('ultra-price-val');
+  const teamOrig = document.getElementById('ultra-original-val');
+  const teamPeriod = document.getElementById('ultra-period-val');
+  const teamFeature = document.getElementById('ultra-feature-devices');
+  const teamBtn = document.getElementById('ultra-contact-btn');
+
+  const teamData = periodData.team[currentTeamDevices] || periodData.team['3'];
+  const isCustom = currentTeamDevices === 'more';
+
+  if (teamPrice) {
+    teamPrice.classList.remove('price-pop');
+    void teamPrice.offsetWidth;
+    teamPrice.textContent = teamData.price;
+    teamPrice.classList.add('price-pop');
   }
 
-  function render(p) {
-    // 1. Ẩn chữ hero khi bắt đầu cuộn
-    const textOpacity = Math.max(0, 1 - p * 4);
-    heroContent.style.opacity = textOpacity.toFixed(3);
-    heroContent.style.transform = `translateY(${(-40 * Math.min(1, p * 3)).toFixed(1)}px)`;
-    heroContent.style.pointerEvents = textOpacity < 0.1 ? 'none' : 'auto';
-
-    // 2. Lớp phủ đen mờ dần để lộ rõ ảnh công trình kiến trúc
-    heroOverlay.style.opacity = (0.55 * textOpacity + 0.15).toFixed(3);
-
-    // 3. Tiến trình xuất hiện các thẻ bản vẽ chi tiết
-    const calloutP = Math.max(0, Math.min(1, (p - 0.12) / 0.72));
-
-    // Hiển thị các thẻ bản vẽ chi tiết với hiệu ứng trượt nhẹ
-    cards.forEach((card, index) => {
-      const cardP = Math.max(0, Math.min(1, (calloutP - index * 0.05) / 0.75));
-      card.style.opacity = cardP.toFixed(3);
-      card.style.pointerEvents = cardP > 0.3 ? 'auto' : 'none';
-
-      // Trượt nhẹ từ phía ngoài vào vị trí
-      const isLeft = card.classList.contains('callout-card-section-left') || card.classList.contains('callout-card-back') || card.classList.contains('callout-card-top');
-      const shiftX = isLeft ? -25 * (1 - cardP) : 25 * (1 - cardP);
-      card.style.transform = `translate3d(${shiftX.toFixed(1)}px, 0, 0)`;
-    });
-  }
-
-  function tick() {
-    const diff = targetProgress - currentProgress;
-    if (Math.abs(diff) > 0.0005) {
-      currentProgress += diff * 0.12; // Damping lerp mượt mà
-      render(currentProgress);
-      requestAnimationFrame(tick);
+  if (teamOrig) {
+    if (teamData.original && !isCustom) {
+      teamOrig.style.display = '';
+      teamOrig.classList.remove('price-pop');
+      void teamOrig.offsetWidth;
+      teamOrig.textContent = teamData.original;
+      teamOrig.classList.add('price-pop');
     } else {
-      currentProgress = targetProgress;
-      render(currentProgress);
-      isRunning = false;
+      teamOrig.style.display = 'none';
     }
   }
 
-  function update() {
-    targetProgress = calculateTargetProgress();
-    if (!isRunning) {
-      isRunning = true;
-      requestAnimationFrame(tick);
-    }
+  if (teamPeriod) {
+    teamPeriod.style.display = isCustom ? 'none' : '';
+    teamPeriod.textContent = periodText;
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
+  const teamLabels = {
+    '3': 'Multi-device license (3 PCs)',
+    '5': 'Multi-device license (5 PCs)',
+    '10': 'Multi-device license (up to 10 PCs)',
+    'more': 'Multi-device license (>10 PCs / Custom)'
+  };
+  if (teamFeature && teamLabels[currentTeamDevices]) {
+    teamFeature.textContent = teamLabels[currentTeamDevices];
+  }
 
-  // Khởi tạo ban đầu
-  targetProgress = calculateTargetProgress();
-  currentProgress = targetProgress;
-  render(currentProgress);
+  if (teamBtn) {
+    if (isCustom) {
+      teamBtn.innerHTML = 'Contact Sales <b>→</b>';
+      teamBtn.setAttribute('href', '#cta?plan=team&devices=custom');
+    } else {
+      teamBtn.innerHTML = 'Get Started <b>→</b>';
+      teamBtn.setAttribute('href', `#cta?plan=team&devices=${currentTeamDevices}&period=${currentBillingPeriod}`);
+    }
+  }
 }
-
-// ==========================================================================
-// 9. LIGHTBOX PREVIEW CHO BẢN VẼ KIẾN TRÚC
-// ==========================================================================
-
-function initDrawingModal() {
-  const modal = document.getElementById('drawing-modal');
-  const modalImg = document.getElementById('modal-img');
-  const modalCaption = document.getElementById('modal-caption');
-  const closeBtn = document.querySelector('.drawing-modal-close');
-  const backdrop = document.querySelector('.drawing-modal-backdrop');
-  const cards = document.querySelectorAll('.callout-card');
-
-  if (!modal || !modalImg || !modalCaption) return;
-
-  function openModal(src, caption) {
-    modalImg.src = src;
-    modalCaption.textContent = caption;
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeModal() {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const img = card.querySelector('img');
-      const title = card.querySelector('h4');
-      const code = card.querySelector('.callout-code');
-      if (img && title) {
-        const caption = `${code ? code.textContent + ' — ' : ''}${title.textContent}`;
-        openModal(img.src, caption);
-      }
-    });
-  });
-
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  if (backdrop) backdrop.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
-}
-
-// ==========================================================================
-// 10. FEATURES SCROLL SHOWCASE ANIMATION
-// ==========================================================================
 
 /**
- * Điều khiển xuất hiện các khung chữ tính năng đè lên ảnh feature.jpg khi cuộn chuột
+ * Khởi tạo bộ chọn chu kỳ thanh toán và chọn số thiết bị gói Team
  */
-function initFeaturesScrollAnimation() {
-  const section = document.getElementById('features');
-  const overlay = document.getElementById('features-tags-overlay');
-  if (!section || !overlay) return;
+function initPricingSystem() {
+  const billingButtons = document.querySelectorAll('.billing-btn');
+  const deviceSelect = document.getElementById('device-select');
 
-  const tags = overlay.querySelectorAll('.feature-tag-box');
-  if (!tags.length) return;
+  // Lắng nghe sự kiện click trên các nút chọn tháng (1, 6, 12 tháng)
+  billingButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const period = button.dataset.period;
+      if (!period || period === currentBillingPeriod) return;
 
-  function updateFeatures() {
-    const rect = section.getBoundingClientRect();
-    const scrollDistance = section.offsetHeight - window.innerHeight;
-    if (scrollDistance <= 0) {
-      tags.forEach((tag) => tag.classList.add('active'));
-      return;
-    }
+      currentBillingPeriod = period;
 
-    // Tiến trình cuộn qua khối features từ 0 (bắt đầu) đến 1 (kết thúc)
-    const progress = Math.max(0, Math.min(1, -rect.top / scrollDistance));
-    const total = tags.length;
+      billingButtons.forEach((btn) => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-checked', 'false');
+      });
+      button.classList.add('active');
+      button.setAttribute('aria-checked', 'true');
 
-    tags.forEach((tag, idx) => {
-      // Phân bổ đều các mốc cuộn chuột để từng khung chữ hiện lên lần lượt
-      const threshold = 0.08 + (idx / total) * 0.72;
-      if (progress >= threshold) {
-        tag.classList.add('active');
-      } else {
-        tag.classList.remove('active');
-      }
+      updateAllPricing();
+    });
+  });
+
+  // Lắng nghe sự kiện đổi số thiết bị trên gói Team
+  if (deviceSelect) {
+    deviceSelect.addEventListener('change', () => {
+      currentTeamDevices = deviceSelect.value || '3';
+      updateAllPricing();
     });
   }
-
-  window.addEventListener('scroll', updateFeatures, { passive: true });
-  window.addEventListener('resize', updateFeatures, { passive: true });
-  updateFeatures();
 }
 
 // ==========================================================================
-// 11. KHỞI CHẠY ỨNG DỤNG (INITIALIZATION)
+// 9. BỘ CHUYỂN ĐỔI DANH MỤC ECOSYSTEM (PLUGIN / TEMPLATE)
+// ==========================================================================
+function initEcosystemSwitcher() {
+  const buttons = document.querySelectorAll('.ecosystem-btn');
+  const pluginView = document.getElementById('ecosystem-plugin-view');
+  const templateView = document.getElementById('ecosystem-template-view');
+
+  if (!buttons.length || !pluginView || !templateView) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      if (!tab) return;
+
+      buttons.forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      if (tab === 'plugin') {
+        templateView.style.display = 'none';
+        pluginView.style.display = '';
+        pluginView.classList.remove('ecosystem-view');
+        void pluginView.offsetWidth;
+        pluginView.classList.add('ecosystem-view');
+      } else if (tab === 'template') {
+        pluginView.style.display = 'none';
+        templateView.style.display = '';
+        templateView.classList.remove('ecosystem-view');
+        void templateView.offsetWidth;
+        templateView.classList.add('ecosystem-view');
+      }
+    });
+  });
+
+  // Tương tác tải xuống trực tiếp file template mẫu
+  const downloadBtns = templateView.querySelectorAll('.template-download-btn');
+  downloadBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const filename = btn.dataset.filename || 'Template.skp';
+      const templateName = btn.dataset.templateName || 'Template';
+
+      try {
+        const blob = new Blob(
+          [`Arcix Official Architectural Template: ${templateName}\nVersion: 2026.1\nCreated for Arcix SketchUp Workflow Automation.`],
+          { type: 'application/octet-stream' }
+        );
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        const oldHtml = btn.innerHTML;
+        btn.innerHTML = 'Downloaded ✓';
+        setTimeout(() => {
+          btn.innerHTML = oldHtml;
+        }, 1600);
+      } catch (err) {
+        // Fallback navigation
+        window.location.href = btn.getAttribute('href');
+      }
+    });
+  });
+}
+
+// ==========================================================================
+// 10. KHỞI CHẠY ỨNG DỤNG (INITIALIZATION)
 // ==========================================================================
 function init() {
   initStylePicker();
   initToolbarActions();
-  initHeroScrollAnimation();
-  initFeaturesScrollAnimation();
-  initDrawingModal();
   initScrollReveal();
   initSmoothScroll();
+  initPricingSystem();
+  initEcosystemSwitcher();
   applyStyle();
 }
 

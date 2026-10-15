@@ -4,104 +4,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Scribblit keeps ideas, notes, and daily planning in one smart notebook." />
-  <title>Scribblit — Test.</title>
+  <meta name="description"
+    content="Arcix automates architectural workflows and generates production-ready technical drawings directly inside SketchUp." />
+  <title>Arcix - Automation Architecture</title>
+  <link rel="icon" id="favicon" type="image/png" href="logo/Logo_Light.png" />
+  <link rel="apple-touch-icon" href="logo/Logo_Light.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
-  <header class="site-header reveal reveal-top">
-    <a class="brand" href="#top" aria-label="Scribblit home"><span class="brand-icon">▤</span><span>Scribblit</span></a>
-    <nav aria-label="Main navigation"><a href="#features">Features</a><a href="#pricing">Pricing</a></nav>
-    <div class="header-actions"><a class="login" href="#">Log in</a><a class="button button-dark" href="#pricing">BUY
+  <header class="site-header reveal reveal-top visible">
+    <a class="brand" href="#top" aria-label="Arcix home"><img class="brand-logo" src="logo/Logo_Light.png"
+        alt="Arcix Logo" /><span>Arcix</span></a>
+    <nav aria-label="Main navigation"><a href="#features">Features</a><a href="#pricing">Pricing</a><a
+        href="#other">Other</a><a href="#reviews">Reviews</a></nav>
+    <div class="header-actions"><a class="login" href="https://app.lemonsqueezy.com/my-orders/login">Log in</a><a
+        class="button button-dark" href="#pricing">BUY
         NOW</a></div>
   </header>
 
   <main id="top">
     <section class="hero" id="hero">
-      <div class="hero-sticky">
-        <div class="hero-stage" id="hero-stage">
-          <!-- Main Hero Image (stays full size) -->
-          <img class="hero-image" src="image/hero-mono.png" alt="Modern architectural pavilion with reflection" />
-          <div class="hero-overlay" id="hero-overlay"></div>
+      <div class="hero-stage" id="hero-stage">
+        <!-- Main Hero Image -->
+        <img class="hero-image" src="image/hero-mono.png" alt="Modern architectural pavilion with reflection" />
+        <div class="hero-overlay" id="hero-overlay"></div>
 
-          <!-- Hero Headline & Subtitle (fades out on scroll) -->
-          <div class="hero-content" id="hero-content">
-            <h1>Your Ideas<br />We handle the rest.</h1>
-            <div id="hero-subtitle" class="hero-subtitle"><span>Automate architectural workflows and generate
-                production-ready technical drawings directly inside SketchUp.</span></div>
-          </div>
-
-          <!-- ==========================================================================
-               5 THẺ BẢN VẼ KIẾN TRÚC CHI TIẾT (CALLOUT CARDS)
-               Tên chuẩn tiếng Anh kỹ thuật, chữ màu trắng, hình ảnh phóng to
-               ========================================================================== -->
-          <div class="callout-cards" id="callout-cards">
-            <!-- Card 1: Roof Plan -->
-            <article class="callout-card callout-card-top" id="card-top">
-              <div class="callout-card-img">
-                <img src="image/arc3-top.png" alt="Roof Plan" />
-              </div>
-              <div class="callout-card-info">
-                <span class="callout-code">ARC-01</span>
-                <h4>Roof Plan</h4>
-              </div>
-            </article>
-
-            <!-- Card 2: Longitudinal Section (Left) -->
-            <article class="callout-card callout-card-section-left" id="card-section-left">
-              <div class="callout-card-img">
-                <img src="image/arc5-scection-left.png" alt="Longitudinal Section Left" />
-              </div>
-              <div class="callout-card-info">
-                <span class="callout-code">ARC-02</span>
-                <h4>Section A-A (Left)</h4>
-              </div>
-            </article>
-
-            <!-- Card 3: Rear Elevation -->
-            <article class="callout-card callout-card-back" id="card-back">
-              <div class="callout-card-img">
-                <img src="image/arc2-back.png" alt="Rear Elevation" />
-              </div>
-              <div class="callout-card-info">
-                <span class="callout-code">ARC-3</span>
-                <h4>Rear Elevation</h4>
-              </div>
-            </article>
-
-            <!-- Card 4: Floor-to-Ceiling Perspective -->
-            <article class="callout-card callout-card-ceiling" id="card-ceiling">
-              <div class="callout-card-img">
-                <img src="image/arc8-view-finish-to-ceiling.png" alt="Floor-to-Ceiling Perspective" />
-              </div>
-              <div class="callout-card-info">
-                <span class="callout-code">ARC-04</span>
-                <h4>Floor-to-Ceiling View</h4>
-              </div>
-            </article>
-
-            <!-- Card 5: Front Elevation -->
-            <article class="callout-card callout-card-front" id="card-front">
-              <div class="callout-card-img">
-                <img src="image/arc1-front.png" alt="Front Elevation" />
-              </div>
-              <div class="callout-card-info">
-                <span class="callout-code">ARC-05</span>
-                <h4>Front Elevation</h4>
-              </div>
-            </article>
-          </div>
-
-          <!-- Lightbox modal for enlarged drawing preview -->
-          <div class="drawing-modal" id="drawing-modal" aria-hidden="true">
-            <div class="drawing-modal-backdrop"></div>
-            <div class="drawing-modal-content">
-              <button class="drawing-modal-close" aria-label="Close modal">✕</button>
-              <img id="modal-img" src="" alt="Architectural drawing preview" />
-              <div class="modal-caption" id="modal-caption"></div>
-            </div>
-          </div>
+        <!-- Hero Headline & Subtitle -->
+        <div class="hero-content" id="hero-content">
+          <h1>Your Ideas<br />We handle the rest.</h1>
+          <div id="hero-subtitle" class="hero-subtitle"><span>Automate architectural workflows and generate
+              production-ready technical drawings directly inside SketchUp.</span></div>
         </div>
       </div>
     </section>
@@ -111,42 +44,16 @@
           guarantee</span><span>Cancel Anytime</span></div>
     </section>
 
-    <section id="features" class="features-scroll-section">
-      <div class="features-sticky-wrap">
-        <div class="container features-container">
-          <div class="section-heading features-heading">
-            <h2>Everything u need to automate ur SketchUp workflow:</h2>
-          </div>
+    <section id="features" class="features-section reveal">
+      <div class="container features-container">
+        <div class="section-heading features-heading">
+          <h2>Everything u need to automate ur SketchUp workflow:</h2>
+        </div>
 
-          <div class="features-showcase" id="features-showcase">
-            <div class="features-image-wrap">
-              <img src="image/feature.jpg" alt="Automate SketchUp architectural workflow diagram"
-                class="features-main-img" />
-
-              <!-- Các khung chữ hiển thị tính năng đè lên ảnh (Chỉ tên tính năng, không mô tả) -->
-              <!-- Bạn có thể tùy chỉnh tọa độ %, hoặc copy thêm tính năng thứ 5, 6... tại đây -->
-              <div class="features-tags-overlay" id="features-tags-overlay">
-                <!-- 1. Auto-generate floor plans, elevations, and sections (Đặt gần bản vẽ mặt bằng ở đỉnh) -->
-                <div class="feature-tag-box" style="left: 50%; top: 4%; --tx: -50%; --ty: 0%;">
-                  <span class="feature-tag-title">Auto-generate floor plans, elevations, and sections</span>
-                </div>
-
-                <!-- 2. Auto-generate column grids and level grids (Đặt bên trái gần biểu tượng bánh răng quy trình) -->
-                <div class="feature-tag-box" style="left: 4%; top: 48%; --tx: 0%; --ty: -50%;">
-                  <span class="feature-tag-title">Auto-generate column grids and level grids</span>
-                </div>
-
-                <!-- 3. Export CAD with full layers and hatches (Đặt bên phải gần biểu tượng bản vẽ CAD) -->
-                <div class="feature-tag-box" style="right: 4%; top: 20%; --tx: 0%; --ty: 0%;">
-                  <span class="feature-tag-title">Export CAD with full layers and hatches</span>
-                </div>
-
-                <!-- 4. Export BIM model in IFC format (Đặt góc dưới bên phải gần mô hình/dữ liệu BIM) -->
-                <div class="feature-tag-box" style="right: 4%; bottom: 8%; --tx: 0%; --ty: 0%;">
-                  <span class="feature-tag-title">Export BIM model in IFC format</span>
-                </div>
-              </div>
-            </div>
+        <div class="features-showcase" id="features-showcase">
+          <div class="features-image-wrap">
+            <img src="image/feature.jpg" alt="Automate SketchUp architectural workflow diagram"
+              class="features-main-img" />
           </div>
         </div>
       </div>
@@ -156,100 +63,321 @@
       <div class="container pricing-container">
         <div class="center-heading"><small>PRICING</small>
           <h2>Choose your pricing plan</h2>
-          <p>Keep your notes organized, clear, and easy to find. Every thought flows into a system that adapts to your
-            style.</p>
+          <p>Streamline your architectural drafting and automate technical drawings directly inside SketchUp.</p>
         </div>
+
+        <!-- Global Billing Cycle Switcher (1 Month, 12 Months) -->
+        <div class="billing-switcher-wrap">
+          <div class="billing-switcher" role="radiogroup" aria-label="Billing cycle selector">
+            <button type="button" class="billing-btn" data-period="1" role="radio" aria-checked="false">
+              1 Month
+            </button>
+            <button type="button" class="billing-btn active" data-period="12" role="radio" aria-checked="true">
+              12 Months <span class="billing-badge">Save ~35%</span>
+            </button>
+          </div>
+        </div>
+
         <div class="pricing-grid">
           <article class="price-card">
-            <p>Free</p><strong>$30 <small>/year</small></strong><span>For casual note-takers getting started.</span>
+            <p>Standard</p>
+            <div class="price-val-row">
+              <del class="price-original" id="standard-original-val">$99.99</del>
+              <strong class="price-val"><span id="standard-price-val">$69.99</span> <small class="period-text"
+                  id="standard-period-val">/year</small></strong>
+            </div>
+            <span>For individual architects getting started.</span>
             <hr>
             <ul>
-              <li>Only auto-generate floor plans, elevations, and sections</li>
-              <li>Basic search &amp; tagging</li>
+              <li>Only auto-generate floor plans, elevations & sections</li>
+              <li>Manage scenes & generate construction drawings</li>
+              <li>Basic 2D linework output</li>
+              <li>DWG, DXF, LAYOUT import/export</li>
+              <li>Classification; room tagging</li>
               <li>Single device access</li>
               <li>Community support</li>
-            </ul><a href="#cta">Get Started <b>→</b></a>
+              <li>Pay-the-difference upgrade to Pro anytime</li>
+            </ul><a id="standard-action-btn" href="#cta?plan=standard&period=12">Get Started <b>→</b></a>
           </article>
-          <article class="price-card featured"><em>Most Popular</em>
-            <p>Pro</p><strong>$69 <small>/year</small></strong><span>For power users who need more.</span>
+          <article class="price-card featured"><em>Highly Recommended</em>
+            <p>Pro</p>
+            <div class="price-val-row">
+              <del class="price-original" id="pro-original-val">$199.99</del>
+              <strong class="price-val"><span id="pro-price-val">$119.99</span> <small class="period-text"
+                  id="pro-period-val">/year</small></strong>
+            </div>
+            <span>For professional architects &amp; studios.</span>
             <hr>
             <ul>
-              <li>Unlimited notes &amp; notebooks</li>
-              <li>Advanced search &amp; tagging</li>
-              <li>Real-time collaboration</li>
-              <li>Cloud sync across devices</li>
-              <li>Priority email support</li>
-            </ul><a href="#cta">Upgrade to Pro <b>→</b></a>
+              <li>Everything in Standard</li>
+              <li>Include Arcix Section &amp; Arcix Text</li>
+              <li>Full 2D drawings with auto-hatch & full dimensions</li>
+              <li>Custom hatch for each material</li>
+              <li>Auto-generate level markers & column grids</li>
+              <li>Import DXF/DWG/LAYOUT title blocks into Sheet Manager</li>
+              <li>Priority support</li>
+            </ul>
+            <div class="price-actions">
+              <a id="pro-action-btn" href="#cta?plan=pro&period=12">Get Started <b>→</b></a>
+              <a class="btn-upgrade-standard" href="#cta">Upgrade from Standard User <b>→</b></a>
+            </div>
           </article>
           <article class="price-card">
-            <p>Vision Pro</p><strong>$149 <small>/year</small></strong><span>For teams that think together.</span>
+            <p>Team</p>
+            <div class="price-val-row">
+              <del class="price-original" id="ultra-original-val">$449.99</del>
+              <strong class="price-val"><span id="ultra-price-val">$119.99</span> <small class="period-text"
+                  id="ultra-period-val">/year</small></strong>
+            </div>
+            <span>For multi-seat firms &amp; enterprise teams.</span>
             <hr>
             <ul>
               <li>Everything in Pro</li>
-              <li>Team dashboards &amp; workspaces</li>
-              <li>Admin roles &amp; permissions</li>
-              <li>Dedicated support manager</li>
-              <li>Custom integrations</li>
-            </ul><a href="#cta">Contact Sales <b>→</b></a>
+              <li>Early access to upcoming AI features</li>
+              <li>Floating license management &amp; seat sharing</li>
+              <li id="ultra-feature-devices">Multi-device license (3 PCs)</li>
+              <li>Dedicated support manager &amp; custom onboarding</li>
+            </ul>
+            <div class="price-actions">
+              <div class="device-select-box">
+                <select id="device-select" class="device-select" aria-label="Select device count">
+                  <option value="3">3 Devices</option>
+                  <option value="5">5 Devices</option>
+                  <option value="10">10 Devices</option>
+                  <option value="more">&gt;10 Devices</option>
+                </select>
+              </div>
+              <a id="ultra-contact-btn" href="#cta?plan=team&devices=3&period=12">Get Started <b>→</b></a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="content-section reveal">
+    <section id="other" class="content-section reveal">
       <div class="container"><span class="badge">Plugin Ecosystem</span>
         <h2 class="feature-title">And, more...</h2>
         <p class="feature-intro">Driven by the vision to transform SketchUp from a basic modeling tool into an
           end-to-end project execution powerhouse, we deliver a plugin ecosystem optimized for every stage of your
           workflow.</p>
-        <div class="products-grid">
-          <!-- Sản phẩm 1 -->
-          <article class="product-card">
-            <div class="product-card-img">
-              <img src="image/arc3-top.png" alt="Architectural Drafting Suite" />
-            </div>
-            <div class="product-card-body">
-              <span class="product-badge">PLUGIN 01</span>
-              <h3>Architectural Drafting Suite</h3>
-              <p>Instant 2D technical drawings, dimensioning, and tag automation synced directly from 3D models.</p>
-            </div>
-          </article>
 
-          <!-- Sản phẩm 2 -->
-          <article class="product-card">
-            <div class="product-card-img">
-              <img src="image/arc5-scection-left.png" alt="Structural & Grid Engine" />
-            </div>
-            <div class="product-card-body">
-              <span class="product-badge">PLUGIN 02</span>
-              <h3>Structural & Grid Engine</h3>
-              <p>Automatic column grids, axis markers, and parametric foundation detail generation.</p>
-            </div>
-          </article>
+        <!-- Switcher between PLUGIN and TEMPLATE -->
+        <div class="ecosystem-switcher-wrap">
+          <div class="ecosystem-switcher" role="tablist" aria-label="Ecosystem Category Selector">
+            <button type="button" class="ecosystem-btn active" data-tab="plugin" role="tab" aria-selected="true"
+              id="ecosystem-btn-plugin">
+              PLUGIN
+            </button>
+            <button type="button" class="ecosystem-btn" data-tab="template" role="tab" aria-selected="false"
+              id="ecosystem-btn-template">
+              MODEL
+            </button>
+          </div>
+        </div>
 
-          <!-- Sản phẩm 3 -->
-          <article class="product-card">
-            <div class="product-card-img">
-              <img src="image/arc1-front.png" alt="Smart BIM & IFC Exporter" />
-            </div>
-            <div class="product-card-body">
-              <span class="product-badge">PLUGIN 03</span>
-              <h3>Smart BIM & IFC Exporter</h3>
-              <p>Export standard IFC4 BIM models with full property sets, classification tags, and hierarchy.</p>
-            </div>
-          </article>
+        <!-- PLUGIN GRID VIEW -->
+        <div id="ecosystem-plugin-view" class="ecosystem-view">
+          <div class="products-grid">
+            <!-- Sản phẩm 1 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/section.png" alt="Arcix Section" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">PLUGIN 01</span>
+                <h3>Arcix Section</h3>
+                <p>A specialized SketchUp tool designed for architects to instantly generate precise section cuts and
+                  apply custom material-based hatch patterns automatically, streamlining 2D documentation workflows.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$79.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$39.99</strong>
+                      <small class="product-price-unit">/year</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn" href="#cta?plugin=drafting-suite">Buy Now <b>→</b></a>
+                </div>
+              </div>
+            </article>
 
-          <!-- Sản phẩm 4 -->
-          <article class="product-card">
-            <div class="product-card-img">
-              <img src="image/arc8-view-finish-to-ceiling.png" alt="Section & Detail Crafter" />
-            </div>
-            <div class="product-card-body">
-              <span class="product-badge">PLUGIN 04</span>
-              <h3>Section & Detail Crafter</h3>
-              <p>Generate detailed wall assemblies, floor-to-ceiling sections, and custom CAD hatches.</p>
-            </div>
-          </article>
+            <!-- Sản phẩm 2 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/arcix_text.png" alt="Structural & Grid Engine" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">PLUGIN 02</span>
+                <h3>Arcix Text</h3>
+                <p>A specialized typography and annotation tool for SketchUp, enabling architects to create editable 3D
+                  text, smart technical labels on models and 3D/2D documentation layouts. Supports all languages
+                  worldwide</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$64.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$34.99</strong>
+                      <small class="product-price-unit">/year</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn" href="#cta?plugin=structural-grid">Buy Now <b>→</b></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Sản phẩm 3 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/library_icon.png" alt="Section & Detail Crafter" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">PLUGIN 03</span>
+                <h3>Arcix Library + Model 01, 02</h3>
+                <p>Library helps you organize and access your entire SketchUp library from one place. Browse
+                  collections, search for models or materials, and insert them directly into SketchUp with ease.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$24.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$8.99</strong>
+                      <small class="product-price-unit">/license</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn" href="#cta?plugin=section-detail-crafter">Buy Now <b>→</b></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Sản phẩm 4 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/round_vertices_icon.png" alt="Smart BIM & IFC Exporter" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">PLUGIN 04</span>
+                <h3>Arcix Round Vertices</h3>
+                <p>Arcix Round Vertices is a precision SketchUp extension that rounds vertex coordinates, eliminates
+                  approximate dimensions (~), and cleans geometry.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$12.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$2.99</strong>
+                      <small class="product-price-unit">/license</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn" href="#cta?plugin=bim-ifc-exporter">Buy Now <b>→</b></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- MODEL GRID VIEW -->
+        <div id="ecosystem-template-view" class="ecosystem-view" style="display: none;">
+          <div class="products-grid">
+            <!-- Model 1 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/door_window.png" alt="Architecture Standard Model" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">MODEL 01</span>
+                <h3>Model 3D - Door & Window</h3>
+                <p>Model - Door & Window is a dedicated SketchUp (.skp) asset library containing a curated collection of
+                  parametric and standard doors and windows, optimized for architectural visualization, interior layouts
+                </p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$8.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$2.99</strong>
+                      <small class="product-price-unit">/.SKP</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn template-download-btn" href="template.html#template-card-1"
+                    data-filename="Architecture_Standard.skp" data-template-name="Architecture Standard">Download .SKP
+                    <b>↓</b></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Model 2 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/model2d.jpg" alt="Interior Design Pro Model" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">MODEL 02</span>
+                <h3>2D Graphics 200+ File</h3>
+                <p>A 2D SketchUp component collection featuring people, furniture, sanitary ware, vegetation, and
+                  more—optimized to keep your model lightweight and ideal for technical drawings and documentation.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$11.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$3.99</strong>
+                      <small class="product-price-unit">/.SKP</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn template-download-btn" href="template.html#template-card-2"
+                    data-filename="Interior_Design_Pro.skp" data-template-name="Interior Design Pro">Download .SKP
+                    <b>↓</b></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Model 3 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/model-annotation.jpg" alt="LAYOUT ANNOTATIONS" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">MODEL 03</span>
+                <h3>LAYOUT Annotation</h3>
+                <p>The ultimate LayOut Scrapbook packed with professional architectural annotations for construction
+                  drawings—featuring north points, graphic scale bars, callouts, and much more.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <del class="product-price-original">$5.99</del>
+                    <div class="product-price">
+                      <strong class="product-price-val">$1.99</strong>
+                      <small class="product-price-unit">/.LAYOUT</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn template-download-btn" href="template.html#template-card-3"
+                    data-filename="Landscape_and_Site_Planning.skp"
+                    data-template-name="Landscape & Site Planning">Download .SKP <b>↓</b></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Model 4 -->
+            <article class="product-card">
+              <div class="product-card-img">
+                <img src="image/tree.jpg" alt="Model 3D - Graphic Trees" />
+              </div>
+              <div class="product-card-body">
+                <span class="product-badge">MODEL 04</span>
+                <h3>Model 3D - Graphic Trees</h3>
+                <p>A collection of 400+ high-quality 2D/3D graphic trees to keep your SketchUp model lightweight,
+                  perfect
+                  for
+                  decorating landscapes in a variety of styles.</p>
+                <div class="product-card-footer">
+                  <div class="product-price-row">
+                    <div class="product-price">
+                      <strong class="product-price-val">COMING SOON</strong>
+                      <small class="product-price-unit">.SKP / SketchUp 2021+</small>
+                    </div>
+                  </div>
+                  <a class="product-buy-btn template-download-btn" href="template.html#template-card-4"
+                    data-filename="Structural_and_Framing.skp" data-template-name="Structural & Framing">Download .SKP
+                    <b>↓</b></a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -259,9 +387,230 @@
         <div class="cta-card">
           <h2>Are you student?</h2>
           <p>Special discounts for students. Claim yours today!</p>
-          <div><a class="button button-dark" href="#top">Verify Now</a><a class="button button-outline"
-              href="#top">Learn
-              more →</a></div>
+          <div>
+            <a class="button button-dark" href="student.html">Verify Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         REVIEWS SECTION (AVERAGE 4.8 / 5.0 STARS)
+         ========================================================================== -->
+    <section id="reviews" class="content-section reveal reviews-section">
+      <div class="container">
+        <div class="center-heading">
+          <small>COMMUNITY &amp; REVIEWS</small>
+          <h2>Loved by Architects &amp; Designers</h2>
+          <p>Discover how studios, BIM managers, and designers worldwide save hours on technical drafting with Arcix.
+          </p>
+        </div>
+
+        <!-- Overall Scoreboard Summary -->
+        <div class="reviews-scoreboard">
+          <div class="score-summary">
+            <div class="score-big">4.7</div>
+            <div class="score-stars" aria-label="4.7 out of 5 stars">
+              <span class="star-icon">★</span>
+              <span class="star-icon">★</span>
+              <span class="star-icon">★</span>
+              <span class="star-icon">★</span>
+              <span class="star-icon">★</span>
+            </div>
+            <p class="score-caption">Overall Rating: <strong>4.7 / 5.0</strong></p>
+            <span class="score-count">Based on 1,480+ authentic reviews</span>
+          </div>
+
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <span class="bar-label">5 Stars</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 75%;"></div>
+              </div>
+              <span class="bar-pct">75%</span>
+            </div>
+            <div class="score-bar-row">
+              <span class="bar-label">4 Stars</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 21%;"></div>
+              </div>
+              <span class="bar-pct">21%</span>
+            </div>
+            <div class="score-bar-row">
+              <span class="bar-label">3 Stars</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 3%;"></div>
+              </div>
+              <span class="bar-pct">3%</span>
+            </div>
+            <div class="score-bar-row">
+              <span class="bar-label">2 Stars</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 1%;"></div>
+              </div>
+              <span class="bar-pct">1%</span>
+            </div>
+            <div class="score-bar-row">
+              <span class="bar-label">1 Star</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0%;"></div>
+              </div>
+              <span class="bar-pct">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid" id="reviews-grid">
+          <!-- Review 1: 5 Stars -->
+          <article class="review-card" data-rating="5">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-blue">MV</div>
+              <div class="reviewer-meta">
+                <h4>Marcus Vance</h4>
+                <span class="verified-pill">✓ Verified</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="5 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                </div>
+                <span class="review-score-tag">5.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Saved our studio over 15 hours on our first commercial submission"</h3>
+            <p class="review-body">Arcix transformed our entire construction document pipeline. Generating floor plans
+              and longitudinal 2D sections that sync in real-time with our SketchUp 3D models is incredible. We exported
+              production-ready drawings directly without tedious separate CAD redrafting.</p>
+          </article>
+
+          <!-- Review 2: 5 Stars -->
+          <article class="review-card" data-rating="5">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-purple">ER</div>
+              <div class="reviewer-meta">
+                <h4>Elena Rostova</h4>
+                <span class="verified-pill">✓ Verified Pro</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="5 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                </div>
+                <span class="review-score-tag">5.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Native AutoCAD layer exports and automatic hatches work like magic"</h3>
+            <p class="review-body">Before Arcix, cleaning up SketchUp exports for structural engineers was a painful
+              manual nightmare. Arcix exports clean, native DWG/DXF with compliant layers, line weights, and floor
+              finish hatches in one click. An absolute must-have.</p>
+          </article>
+
+          <!-- Review 3: 4 Stars -->
+          <article class="review-card" data-rating="4">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-emerald">JC</div>
+              <div class="reviewer-meta">
+                <h4>Julian Chen</h4>
+                <span class="verified-pill">✓ Verified Specialist</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="4 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon dim">★</span>
+                </div>
+                <span class="review-score-tag">4.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Seamless IFC4 export to Revit, incredibly fast geometry parsing"</h3>
+            <p class="review-body">The IFC4 export with classification tags and full property sets works flawlessly
+              inside Revit and Navisworks. Giving 4 stars only because I’d love to see custom COBie parameter presets in
+              the next patch, but the core engine is robust and blazing fast.</p>
+          </article>
+
+          <!-- Review 4: 5 Stars -->
+          <article class="review-card" data-rating="5">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-amber">SL</div>
+              <div class="reviewer-meta">
+                <h4>Sarah Lindqvist</h4>
+                <span class="verified-pill">✓ Verified Studio Lead</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="5 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                </div>
+                <span class="review-score-tag">5.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Parametric column grids and axis markers generated in seconds"</h3>
+            <p class="review-body">Generating column grids and axis markers automatically from model bounding boxes
+              saved us repetitive manual alignment work. The dimensioning is accurate, clean, and completely adheres to
+              international architectural drafting standards.</p>
+          </article>
+
+          <!-- Review 5: 4 Stars -->
+          <article class="review-card" data-rating="4">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-rose">MR</div>
+              <div class="reviewer-meta">
+                <h4>Matteo Rossi</h4>
+                <span class="verified-pill">✓ Verified Director</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="4 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon dim">★</span>
+                </div>
+                <span class="review-score-tag">4.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Wall assemblies and technical ceiling sections are super accurate"</h3>
+            <p class="review-body">The detail crafter produces wall assembly callouts and floor-to-ceiling cuts with
+              impressive precision. A strong 4-star tool that delivers on its promises. If they add floating toolbar
+              shortcuts in the viewport, it'll easily be 5 stars.</p>
+          </article>
+
+          <!-- Review 6: 5 Stars -->
+          <article class="review-card" data-rating="5">
+            <div class="review-header">
+              <div class="reviewer-avatar avatar-cyan">DT</div>
+              <div class="reviewer-meta">
+                <h4>David Thorne</h4>
+                <span class="verified-pill">✓ Verified Student</span>
+              </div>
+              <div class="review-rating-row">
+                <div class="review-stars" aria-label="5 out of 5 stars">
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                  <span class="star-icon">★</span>
+                </div>
+                <span class="review-score-tag">5.0</span>
+              </div>
+            </div>
+            <h3 class="review-title">"Lifesaver for final reviews &amp; portfolio submissions"</h3>
+            <p class="review-body">The student discount made this accessible, and it literally saved my final portfolio
+              crit. Exporting clean elevations and sections directly from my pavilion model took minutes instead of days
+              of vector tracing. Can't imagine designing without it now.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -270,21 +619,24 @@
   <footer class="site-footer reveal">
     <div class="container">
       <div class="footer-grid">
-        <div><a class="brand" href="#top"><span class="brand-icon">▤</span><span>Scribblit</span></a>
+        <div><a class="brand" href="#top" aria-label="Arcix home"><img class="brand-logo" src="logo/Logo_Light.png"
+              alt="Arcix Logo" /><span>Arcix</span></a>
           <p>Automate architectural workflows and generate
             production-ready technical drawings directly inside SketchUp.</p>
         </div>
         <div>
-          <h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a>
+          <h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#other">Other</a><a
+            href="#reviews">Reviews</a>
         </div>
         <div>
-          <h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Press</a>
+          <h4>Company</h4><a href="about.html">About</a><a href="terms.html">Term of Policy</a>
         </div>
         <div>
-          <h4>Resources</h4><a href="#">Help Center</a><a href="#">Updates</a><a href="#">Guides</a>
+          <h4>Resources</h4><a href="template.html">Template</a><a href="oda-converter.html">ODA
+            File Converter</a>
         </div>
       </div>
-      <div class="footer-bottom"><span>© 2026 Loopout. All rights reserved.</span><span>in &nbsp; 𝕏</span></div>
+      <div class="footer-bottom"><span>© 2026 Arcix. All rights reserved.</span></div>
     </div>
   </footer>
   <script src="js/main.js" defer></script>

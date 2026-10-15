@@ -1,0 +1,283 @@
+/* ==========================================================================
+   ODA File Converter Page Styles
+   Compatible with Arcix Dark Theme & Design System
+   ========================================================================== */
+
+/* Page Wrapper */
+.converter-page {
+  position: relative;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 130px 24px 80px;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+/* Subtle Ambient Glow */
+.ambient-glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+html.light .ambient-glow {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 40%, transparent 70%);
+}
+
+/* Main Container */
+.converter-container {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.converter-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.converter-header .badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+html.light .converter-header .badge {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.page-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Tools Grid */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  width: 100%;
+}
+
+/* Tool Card */
+.tool-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+html.light .tool-card:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Glow Effect */
+.tool-card-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 60px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.08), transparent 70%);
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.tool-card:hover .tool-card-glow {
+  opacity: 1;
+}
+
+/* OS Icon Container */
+.tool-icon-wrapper {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.tool-card:hover .tool-icon-wrapper {
+  transform: scale(1.06);
+}
+
+.os-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--fg);
+  display: block;
+}
+
+/* Tool Information */
+.tool-info {
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.tool-name {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--fg);
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* Tool Actions & Download Button */
+.tool-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 240px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: #111;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+html.light .download-button {
+  background: #111;
+  color: #fff;
+}
+
+.download-button:hover {
+  opacity: 0.92;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.download-button:active {
+  transform: scale(0.98);
+}
+
+.download-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+  transition: transform 0.2s ease;
+}
+
+.download-button:hover .download-icon {
+  transform: translateY(2px);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 60px);
+  background: rgba(24, 24, 24, 0.92);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+html.light .toast {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive adjustments */
+@media (max-width: 680px) {
+  .converter-page {
+    padding-top: 110px;
+    padding-bottom: 60px;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tool-card {
+    padding: 30px 20px;
+  }
+
+  .tool-name {
+    font-size: 18px;
+  }
+
+  .download-button {
+    max-width: 100%;
+  }
+}
