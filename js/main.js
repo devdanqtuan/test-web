@@ -238,6 +238,18 @@ function initSmoothScroll() {
         if (targetElement) {
           event.preventDefault();
           targetElement.scrollIntoView({ behavior: 'smooth' });
+
+          // Tự động căn giữa gói Pro trên mobile khi bấm BUY NOW hoặc điều hướng tới #pricing
+          if (targetId === '#pricing' && window.innerWidth <= 768) {
+            setTimeout(() => {
+              const pricingGrid = document.querySelector('.pricing-grid');
+              const proCard = pricingGrid?.querySelector('.price-card.featured');
+              if (pricingGrid && proCard) {
+                const targetScroll = proCard.offsetLeft - (pricingGrid.clientWidth - proCard.clientWidth) / 2;
+                pricingGrid.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+              }
+            }, 350);
+          }
         }
       } catch (err) {
         // Fallback gracefully
@@ -490,7 +502,203 @@ function initEcosystemSwitcher() {
 }
 
 // ==========================================================================
-// 10. KHỞI CHẠY ỨNG DỤNG (INITIALIZATION)
+// 10. TƯƠNG TÁC XEM CHI TIẾT TÍNH NĂNG (FEATURE PREVIEW LIGHTBOX)
+// ==========================================================================
+function initFeatureLightbox() {
+  const modal = document.getElementById('feature-modal');
+  if (!modal) return;
+
+  const modalImg = document.getElementById('feature-modal-img');
+  const modalTitle = document.getElementById('feature-modal-title');
+  const modalDesc = document.getElementById('feature-modal-desc');
+  const closeBtn = document.getElementById('feature-modal-close');
+  const cards = document.querySelectorAll('.feature-card');
+
+  function openModal(card) {
+    const fullImg = card.dataset.fullImg;
+    const title = card.dataset.title;
+    const tag = card.dataset.tag;
+    const desc = card.dataset.desc;
+
+    if (modalImg) {
+      modalImg.src = fullImg;
+      modalImg.alt = title;
+    }
+    if (modalTitle) {
+      modalTitle.innerHTML = `${title} <span id="feature-modal-tag" class="feature-tag">${tag}</span>`;
+    }
+    if (modalDesc) {
+      modalDesc.textContent = desc;
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => openModal(card));
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
+// ==========================================================================
+// 11. ĐIỀU HƯỚNG VUỐT BẢNG GIÁ TRÊN MOBILE (MẶC ĐỊNH GÓI PRO)
+// ==========================================================================
+function initMobilePricingSwipe() {
+  const pricingGrid = document.querySelector('.pricing-grid');
+  if (!pricingGrid) return;
+
+  const cards = pricingGrid.querySelectorAll('.price-card');
+  const proCard = pricingGrid.querySelector('.price-card.featured');
+  const dots = document.querySelectorAll('.pricing-dot');
+
+  function centerProCard(instant = false) {
+    if (window.innerWidth > 768 || !proCard) return;
+    const targetScroll = proCard.offsetLeft - (pricingGrid.clientWidth - proCard.clientWidth) / 2;
+    pricingGrid.scrollTo({
+      left: Math.max(0, targetScroll),
+      behavior: instant ? 'instant' : 'smooth'
+    });
+    updateActiveDot(1);
+  }
+
+  function updateActiveDot(index) {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  // Chuyển card khi click vào dot
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.index, 10);
+      if (cards[idx]) {
+        const targetScroll = cards[idx].offsetLeft - (pricingGrid.clientWidth - cards[idx].clientWidth) / 2;
+        pricingGrid.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+        updateActiveDot(idx);
+      }
+    });
+  });
+
+  // Đồng bộ dot khi người dùng vuốt trên màn hình
+  let isScrolling;
+  pricingGrid.addEventListener('scroll', () => {
+    clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      if (window.innerWidth > 768) return;
+      const scrollCenter = pricingGrid.scrollLeft + pricingGrid.clientWidth / 2;
+      let closestIndex = 1;
+      let minDiff = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const diff = Math.abs(scrollCenter - cardCenter);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = idx;
+        }
+      });
+
+      updateActiveDot(closestIndex);
+    }, 40);
+  }, { passive: true });
+
+  // Mặc định căn giữa gói Pro khi vào trang trên mobile
+  if (window.innerWidth <= 768) {
+    setTimeout(() => centerProCard(true), 80);
+    setTimeout(() => centerProCard(true), 350);
+  }
+
+  // Tự động căn lại khi xoay thiết bị
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth <= 768) {
+        centerProCard(true);
+      }
+    }, 150);
+  });
+}
+
+// ==========================================================================
+// 12. HỖ TRỢ KÉO CHUỘT VUỐT FEATURES TRÊN MÀN HÌNH NHỎ (DRAG-TO-SCROLL)
+// ==========================================================================
+function initFeaturesDragScroll() {
+  const grid = document.querySelector('.features-grid');
+  if (!grid) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let hasDragged = false;
+
+  grid.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    if (window.innerWidth > 768) return;
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX - grid.offsetLeft;
+    scrollLeft = grid.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    setTimeout(() => {
+      hasDragged = false;
+    }, 50);
+  });
+
+  grid.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - grid.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    if (Math.abs(walk) > 6) {
+      hasDragged = true;
+    }
+    grid.scrollLeft = scrollLeft - walk;
+  });
+
+  grid.addEventListener(
+    'click',
+    (e) => {
+      if (hasDragged) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    true
+  );
+}
+
+// ==========================================================================
+// 13. KHỞI CHẠY ỨNG DỤNG (INITIALIZATION)
 // ==========================================================================
 function init() {
   initStylePicker();
@@ -499,6 +707,9 @@ function init() {
   initSmoothScroll();
   initPricingSystem();
   initEcosystemSwitcher();
+  initFeatureLightbox();
+  initMobilePricingSwipe();
+  initFeaturesDragScroll();
   applyStyle();
 }
 
